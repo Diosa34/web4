@@ -1,0 +1,33 @@
+<app-header></app-header>
+<form>
+  <div>
+    <label>Логин</label>
+    <input
+      type="text"
+      [(ngModel)]="loginForm.login"
+      #login="ngModel"
+      required
+      name="login"
+    />
+<!--    <div *ngIf="login.errors.required">-->
+<!--      Логин не может быть пустым-->
+<!--    </div>-->
+  </div>
+  <div>
+    <label>Пароль</label>
+    <input
+      type="password"
+      [(ngModel)]="loginForm.password"
+      #password="ngModel"
+      minlength="8"
+      pattern="\w{8,}"
+      placeholder="1abcdefg"
+      name="password"
+    />
+<!--    <div *ngIf="password.errors.pattern">-->
+<!--      Пароль должен включать буквы и цифры, не менее 8 символов-->
+<!--    </div>-->
+  </div>
+
+  <button (click)="printForm()">Войти</button>
+</form>

@@ -1,0 +1,52 @@
+<form method="get" id="form">
+  <div class="data">
+    <label>X:</label>
+    <select size="1" name="x" id="x" required [(ngModel)]="form.x" #x="ngModel">
+      <option value="" selected>Выберите  координату Х</option>
+      <option value="-4">-4</option>
+      <option value="-3">-3</option>
+      <option value="-2">-2</option>
+      <option value="-1">-1</option>
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+<!--    <div *ngIf="x.errors!.required">-->
+<!--      Выберите  координату Х-->
+<!--    </div>-->
+    <br/>
+
+    <label>Y ∈ [-3;3]:</label>
+    <input type="text" id="y" name="y" [(ngModel)]="form.y"
+           #y="ngModel" required min="-3" max="3"/>
+<!--    <div *ngIf="y.errors!.min">-->
+<!--      Координата у не может быть меньше -3-->
+<!--    </div>-->
+<!--    <div *ngIf="y.errors!.max">-->
+<!--      Координата у не может быть больше 3-->
+<!--    </div>-->
+    <br>
+
+    <label>R:</label>
+    <select size="1" name="r" id="r" required [(ngModel)]="form.r" #r="ngModel">
+      <option value="" selected>Выберите радиус</option>
+      <option value="-4">-4</option>
+      <option value="-3">-3</option>
+      <option value="-2">-2</option>
+      <option value="-1">-1</option>
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+<!--    <div *ngIf="r.errors!.required">-->
+<!--      Выберите  радиус-->
+<!--    </div>-->
+    <br/>
+  </div>
+
+  <button id="submit" type="submit" value="Отправить"></button>
+</form>

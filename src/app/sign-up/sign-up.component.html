@@ -1,0 +1,61 @@
+<app-header></app-header>
+<form>
+  <div>
+    <label>Имя</label>
+    <input
+      type="text"
+      [(ngModel)]="signUpForm.name"
+      #name="ngModel"
+      required
+      name="name"
+    />
+    <!--    <div *ngIf="login.errors.required">-->
+    <!--      Логин не может быть пустым-->
+    <!--    </div>-->
+  </div>
+  <div>
+    <label>Логин</label>
+    <input
+      type="text"
+      [(ngModel)]="signUpForm.login"
+      #login="ngModel"
+      required
+      name="login"
+    />
+    <!--    <div *ngIf="login.errors.required">-->
+    <!--      Логин не может быть пустым-->
+    <!--    </div>-->
+  </div>
+  <div>
+    <label>Пароль</label>
+    <input
+      type="password"
+      [(ngModel)]="signUpForm.password"
+      #password="ngModel"
+      minlength="8"
+      pattern="\w{8,}"
+      placeholder="1abcdefg"
+      name="password"
+    />
+    <!--    <div *ngIf="password.errors.pattern">-->
+    <!--      Пароль должен включать буквы и цифры, не менее 8 символов-->
+    <!--    </div>-->
+  </div>
+  <div>
+    <label>Пароль ещё раз</label>
+    <input
+      type="password"
+      [(ngModel)]="signUpForm.passwordRepeat"
+      #passwordRepeat="ngModel"
+      minlength="8"
+      pattern="\w{8,}"
+      placeholder="1abcdefg"
+      name="passwordRepeat"
+    />
+    <!--    <div *ngIf="password.errors.pattern">-->
+    <!--      Пароль должен включать буквы и цифры, не менее 8 символов-->
+    <!--    </div>-->
+  </div>
+
+  <button (click)="printForm()">Зарегистрироваться</button>
+</form>
