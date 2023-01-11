@@ -1,7 +1,7 @@
 <form method="get" id="form">
   <div class="data">
-    <label>X:</label>
-    <select size="1" name="x" id="x" required [(ngModel)]="form.x" #x="ngModel">
+    <label>X: </label>
+    <select size="1" name="x" id="x" required [(ngModel)]="form.x" #x="ngModel" (input)="checkForSubmit(x.valid, y.valid, r.value)">
       <option value="" selected>Выберите  координату Х</option>
       <option value="-4">-4</option>
       <option value="-3">-3</option>
@@ -13,24 +13,31 @@
       <option value="3">3</option>
       <option value="4">4</option>
     </select>
-<!--    <div *ngIf="x.errors!.required">-->
-<!--      Выберите  координату Х-->
-<!--    </div>-->
+    <div *ngIf="x.invalid && (x.dirty || x.touched)">
+        <div *ngIf="x.errors?.['required']" style="color: red">
+          Координата Х не выбрана
+        </div>
+    </div>
     <br/>
 
-    <label>Y ∈ [-3;3]:</label>
-    <input type="text" id="y" name="y" [(ngModel)]="form.y"
-           #y="ngModel" required min="-3" max="3"/>
-<!--    <div *ngIf="y.errors!.min">-->
-<!--      Координата у не может быть меньше -3-->
-<!--    </div>-->
-<!--    <div *ngIf="y.errors!.max">-->
-<!--      Координата у не может быть больше 3-->
-<!--    </div>-->
-    <br>
+    <label>Y ∈ [-3;3]: </label>
+    <input type="number" id="y" name="y" [(ngModel)]="form.y" #y="ngModel" required min="-3" max="3"
+           (input)="checkForSubmit(x!.valid, y!.valid, r!.value)"/>
+    <div *ngIf="y.invalid && (y.dirty || y.touched)">
+      <div *ngIf="y.errors?.['min']" style="color: red">
+        Координата Y не может быть меньше -3
+      </div>
+      <div *ngIf="y.errors?.['max']" style="color: red">
+        Координата Y не может быть больше 3
+      </div>
+      <div *ngIf="y.errors?.['required']" style="color: red">
+        Координата Y не задана
+      </div>
+    </div>
+    <br/>
 
-    <label>R:</label>
-    <select size="1" name="r" id="r" required [(ngModel)]="form.r" #r="ngModel">
+    <label>R: </label>
+    <select size="1" name="r" id="r" required [(ngModel)]="form.r" #r="ngModel" (change)="changeR(r.value, x.valid, y.valid)">
       <option value="" selected>Выберите радиус</option>
       <option value="-4">-4</option>
       <option value="-3">-3</option>
@@ -42,11 +49,13 @@
       <option value="3">3</option>
       <option value="4">4</option>
     </select>
-<!--    <div *ngIf="r.errors!.required">-->
-<!--      Выберите  радиус-->
-<!--    </div>-->
     <br/>
+    <span id="r-warning" style="display: none; color: red; margin-bottom: 1%">Радиус не может быть меньше 1</span>
+    <div *ngIf="r.invalid && (r.dirty || r.touched)">
+      <div *ngIf="r.errors?.['required']" style="color: red; margin-bottom: 1%">
+        Радиус не выбран
+      </div>
+    </div>
   </div>
-
-  <button id="submit" type="submit" value="Отправить"></button>
+  <button id="sbmt" type="submit" value="Отправить" disabled="disabled" (click)="submit()">Отправить</button>
 </form>

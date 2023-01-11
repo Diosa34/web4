@@ -1,0 +1,10 @@
+.center{
+  text-align: center;
+}
+
+svg {
+  width: 25%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  font-size: 2em;
+}

@@ -1,33 +1,42 @@
-<app-header></app-header>
 <form>
   <div>
-    <label>Имя</label>
+    <label>Имя: </label>
     <input
       type="text"
       [(ngModel)]="signUpForm.name"
       #name="ngModel"
       required
       name="name"
+      (input)="checkForSubmit(name.valid, login.valid, password.valid, passwordRepeat.valid)"
     />
-    <!--    <div *ngIf="login.errors.required">-->
-    <!--      Логин не может быть пустым-->
-    <!--    </div>-->
+    <div *ngIf="name.invalid && (name.dirty || name.touched)">
+      <div *ngIf="name.errors?.['required']" style="color: red">
+          Имя не может быть пустым
+      </div>
+    </div>
   </div>
+
+
   <div>
-    <label>Логин</label>
+    <label>Логин: </label>
     <input
       type="text"
       [(ngModel)]="signUpForm.login"
       #login="ngModel"
       required
       name="login"
+      (input)="checkForSubmit(name.valid, login.valid, password.valid, passwordRepeat.valid)"
     />
-    <!--    <div *ngIf="login.errors.required">-->
-    <!--      Логин не может быть пустым-->
-    <!--    </div>-->
+    <div *ngIf="login.invalid && (login.dirty || login.touched)">
+      <div *ngIf="login.errors?.['required']" style="color: red">
+          Логин не может быть пустым
+      </div>
+    </div>
   </div>
+
+
   <div>
-    <label>Пароль</label>
+    <label>Пароль: </label>
     <input
       type="password"
       [(ngModel)]="signUpForm.password"
@@ -36,13 +45,19 @@
       pattern="\w{8,}"
       placeholder="1abcdefg"
       name="password"
+      required
+      (input)="checkForSubmit(name.valid, login.valid, password.valid, passwordRepeat.valid)"
     />
-    <!--    <div *ngIf="password.errors.pattern">-->
-    <!--      Пароль должен включать буквы и цифры, не менее 8 символов-->
-    <!--    </div>-->
+    <div *ngIf="password.invalid && (password.dirty || password.touched)">
+      <div *ngIf="password.errors?.['pattern'] || password.errors?.['required']" style="color: red">
+          Пароль должен включать буквы и цифры, не менее 8 символов
+      </div>
+    </div>
   </div>
+
+
   <div>
-    <label>Пароль ещё раз</label>
+    <label>Пароль ещё раз: </label>
     <input
       type="password"
       [(ngModel)]="signUpForm.passwordRepeat"
@@ -50,12 +65,12 @@
       minlength="8"
       pattern="\w{8,}"
       placeholder="1abcdefg"
+      required
       name="passwordRepeat"
+      (input)="passwordEquals(); checkForSubmit(name.valid, login.valid, password.valid, passwordRepeat.valid)"
     />
-    <!--    <div *ngIf="password.errors.pattern">-->
-    <!--      Пароль должен включать буквы и цифры, не менее 8 символов-->
-    <!--    </div>-->
   </div>
-
-  <button (click)="printForm()">Зарегистрироваться</button>
+  <span id="equals-warning" style="display: none; color: red">Пароли не совпадают</span>
+  <br/>
+  <button id="sign-up-btn" (click)="printForm()" disabled="disabled">Зарегистрироваться</button>
 </form>

@@ -1,6 +1,6 @@
-<div>
+<app-form (changeREvent)="changeArea($event)" (submitEvent)="newPoint($event)"></app-form>
+<div class="center">
   <svg viewBox="0 0 960 960" id="svg" (click)="svgClick($event)">
-    <g id="r5"></g>
     <g id="r4"></g>
     <g id="r3"></g>
     <g id="r2"></g>
@@ -57,14 +57,4 @@
     <text x="490" y="885">-5</text>
   </svg>
 </div>
-<table class="result-table" id="resultTable" style="text-align: center">
-  <tr>
-    <td>Time</td>
-    <td>X</td>
-    <td>Y</td>
-    <td>R</td>
-    <td>Hit</td>
-    <td>Execution time</td>
-    <td>User</td>
-  </tr>
-</table>
+<app-table [items]="items"></app-table>

@@ -1,34 +1,34 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule} from "@angular/forms";
-import { RouterModule } from '@angular/router';
-
 
 import { HeaderComponent} from './header/header.component';
 import { LoginComponent } from './login/login.component';
-import { SvgAndTableComponent } from './svg-and-table/svg-and-table.component';
+import { SvgComponent } from './svg/svg.component';
 import { FormComponent } from './form/form.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { MainPageComponent } from './main-page/main-page.component';
+import {AppComponent} from "./app.component";
+import {AppRoutingModule} from "./app-routing.module";
+import { TableComponent } from './table/table.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
+    AppComponent,
     HeaderComponent,
     LoginComponent,
-    SvgAndTableComponent,
+    SvgComponent,
     FormComponent,
     SignUpComponent,
-    MainPageComponent
+    TableComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot([
-      {path: 'sign-up', component: SignUpComponent},
-      {path: 'login', component: LoginComponent},
-    ]),
+    AppRoutingModule,
+    HttpClientModule,
   ],
   providers: [],
-  bootstrap: [HeaderComponent, LoginComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

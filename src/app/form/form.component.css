@@ -1,0 +1,17 @@
+form {
+  text-align: center;
+}
+
+input, select {
+  padding-left: 1%;
+}
+
+button, input, select {
+  margin-bottom: 1%;
+  border-radius: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}

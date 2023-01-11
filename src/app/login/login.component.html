@@ -1,20 +1,22 @@
-<app-header></app-header>
 <form>
   <div>
-    <label>Логин</label>
+    <label>Логин: </label>
     <input
       type="text"
       [(ngModel)]="loginForm.login"
       #login="ngModel"
       required
       name="login"
+      (input)="checkForSubmit(login.valid, password.valid)"
     />
-<!--    <div *ngIf="login.errors.required">-->
-<!--      Логин не может быть пустым-->
-<!--    </div>-->
+    <div *ngIf="login.invalid && (login.dirty || login.touched)">
+      <div *ngIf="login.errors?.['required']" style="color: red">
+        Логин не может быть пустым
+      </div>
+    </div>
   </div>
   <div>
-    <label>Пароль</label>
+    <label>Пароль: </label>
     <input
       type="password"
       [(ngModel)]="loginForm.password"
@@ -23,11 +25,15 @@
       pattern="\w{8,}"
       placeholder="1abcdefg"
       name="password"
+      required
+      (input)="checkForSubmit(login.valid, password.valid)"
     />
-<!--    <div *ngIf="password.errors.pattern">-->
-<!--      Пароль должен включать буквы и цифры, не менее 8 символов-->
-<!--    </div>-->
+    <div *ngIf="password.invalid && (password.dirty || password.touched)">
+      <div *ngIf="password.errors?.['pattern'] || password.errors?.['required']" style="color: red">
+        Пароль должен включать буквы и цифры, не менее 8 символов
+      </div>
+    </div>
   </div>
 
-  <button (click)="printForm()">Войти</button>
+  <button id="log-in-btn" (click)="printForm()" disabled="disabled">Войти</button>
 </form>
