@@ -46,7 +46,7 @@
       placeholder="1abcdefg"
       name="password"
       required
-      (input)="checkForSubmit(name.valid, login.valid, password.valid, passwordRepeat.valid)"
+      (input)="passwordEquals(); checkForSubmit(name.valid, login.valid, password.valid, passwordRepeat.valid)"
     />
     <div *ngIf="password.invalid && (password.dirty || password.touched)">
       <div *ngIf="password.errors?.['pattern'] || password.errors?.['required']" style="color: red">
@@ -72,5 +72,5 @@
   </div>
   <span id="equals-warning" style="display: none; color: red">Пароли не совпадают</span>
   <br/>
-  <button id="sign-up-btn" (click)="printForm()" disabled="disabled">Зарегистрироваться</button>
+  <button id="sign-up-btn" (click)="sendForm()" disabled="disabled">Зарегистрироваться</button>
 </form>

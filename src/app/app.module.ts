@@ -11,6 +11,7 @@ import {AppComponent} from "./app.component";
 import {AppRoutingModule} from "./app-routing.module";
 import { TableComponent } from './table/table.component';
 import {HttpClientModule} from "@angular/common/http";
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {HttpClientModule} from "@angular/common/http";
     FormComponent,
     SignUpComponent,
     TableComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,

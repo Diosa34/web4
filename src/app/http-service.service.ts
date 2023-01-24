@@ -9,12 +9,13 @@ import {catchError} from "rxjs/operators";
   providedIn: 'root'
 })
 export class HttpService {
-
   constructor(
     private _http: HttpClient,
     private _router: Router,
   ) {
   }
+
+  errorMessage = '';
 
   private _createDefaultHeaders(): HttpHeaders {
     const headers = new HttpHeaders({
@@ -86,6 +87,26 @@ export class HttpService {
       );
   }
 
+  public async postDataDev(url: string, _reqName: string, headers?: {}, body?: {}) {
+    // @ts-ignore
+    return await fetch(url, {method: 'POST', mode: 'no-cors', cache: 'no-cache', headers: headers, body: JSON.stringify(body)})
+    // .then((res) => {
+//   if (res.status === 200) {
+//   switch (_reqName) {
+//   case ("login"): sessionStorage.setItem('token', JSON.stringify(res.json())); break;
+//   case ("logout"): sessionStorage.removeItem('token'); break;
+//   case ("add"): { // @ts-ignore
+//     pointDB: TableString = JSON.stringify(res.json());
+//     this._svg.items.push(pointDB); break;
+//     }
+//   }
+// }
+// }
+  }
+
+
+// )
+
   public deleteData<R>(
     url: string,
     params?: QueryParams,
@@ -103,6 +124,10 @@ export class HttpService {
   }
 
   private _handleError(e: HttpErrorResponse) {
-    console.log(e);
+    switch (e.status) {
+      case 405: this.errorMessage = 'Для получения доступа к данной странице необходимо авторизоваться'; break;
+      default: this.errorMessage = e.message
+    }
+    this._router.navigate(['error-page', this.errorMessage]);
   }
 }

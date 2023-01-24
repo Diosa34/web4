@@ -50,7 +50,6 @@
       <option value="4">4</option>
     </select>
     <br/>
-    <span id="r-warning" style="display: none; color: red; margin-bottom: 1%">Радиус не может быть меньше 1</span>
     <div *ngIf="r.invalid && (r.dirty || r.touched)">
       <div *ngIf="r.errors?.['required']" style="color: red; margin-bottom: 1%">
         Радиус не выбран

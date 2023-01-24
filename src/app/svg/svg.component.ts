@@ -1,22 +1,23 @@
 import { Component } from '@angular/core';
-import {SvgService} from "./svg.service";
-import {Observable} from "rxjs";
+import {Point, TableString} from "../type";
 
 @Component({
     selector: 'app-svg',
   templateUrl: './svg.component.html',
-  providers: [ SvgService ],
+  // providers: [ SvgService ],
   styleUrls: ['./svg.component.css']
 })
 export class SvgComponent {
-  point: any = {
+  point: Point = {
     x: 0,
     y: 0,
     r: 0,
   }
-  items = [];
 
-  constructor(private svgService: SvgService) {}
+  items: Array<TableString> = [];
+
+  addUrl: string = 'http://127.0.0.1:8080/backend/api/auth/register';
+
 
   svgClick(event: MouseEvent) {
     // @ts-ignore
@@ -32,29 +33,23 @@ export class SvgComponent {
     this.newPoint(this.point);
   }
 
-  // когда кликают по свг, то точки отрисовываются на свг, но точки из бд отрисовываются в группах, при чём при каждой смене радиуса
+  // когда кликают по свг, то точки отрисовываются на свг, но точки из бд отрисовываются в группах, причём при каждой смене радиуса
   drawPoint(svgOrG: EventTarget | null, x: number, y: number, resultFill = 'black'){
     // @ts-ignore
     svgOrG.innerHTML += `<circle cx="${x}" cy="${y}" r='7' fill="${resultFill}"/>`;
   }
 
   changeArea(radius: string) {
-    // @ts-ignore
-    document.getElementById('r1').innerHTML = '';
-    // @ts-ignore
-    document.getElementById('r2').innerHTML = '';
-    // @ts-ignore
-    document.getElementById('r3').innerHTML = '';
-    // @ts-ignore
-    document.getElementById('r4').innerHTML = '';
+    for (let i = -4; i < 5; i++) {
+      // @ts-ignore
+      document.getElementById(i.toString() + 'r').innerHTML = '';
+    }
     let r = Number(radius);
     this.point.r = r;
     let areaFill: Number = 810 - r
-    let id: string = "r"
-    if (r > 0) {
-      id = id + radius
+    let id: string = radius + "r"
       // @ts-ignore
-      document.getElementById(id).innerHTML += `<path id="path${r}"
+    document.getElementById(id).innerHTML += `<path id="path${r}"
               d="M 480 480
               L ${480-80*r} 480
               L 480 ${480-80*r}
@@ -64,13 +59,21 @@ export class SvgComponent {
               L 480 480
               L 480 ${480+40*r}
               A ${40*r} ${40*r} 0 0 1 ${480-40*r} 480
-              L 480 480" stroke="black" fill="#fc${areaFill}f""/>`
-    }
+              L 480 480" stroke="black" fill="#fc${areaFill}f""/>`;
   }
 
   //заменить на функцию отрисовки всех точек из списка items
-  newPoint(point: any) {
-    // this.svgService.addPoint(point.x, y, r).subscribe(results => this.items = results.body);
-    console.log(this.items)
+  newPoint(point: Point) {
+    // this.httpService.postDataDev(this.addUrl, "addPoint", {'Content-Type': 'application/json', 'Authorization': 'Bearer' + sessionStorage.getItem('token') }, point)
+  }
+
+  drawPointsFromDB() {
+    for (let i = 1; i < this.items.length; i++) {
+      let x = this.items[i].x;
+      let y = this.items[i].y;
+      if (x <= 960 && y <= 960) {
+        this.drawPoint(document.getElementById(this.items[i].r + "r"), (x / 12 + 0.5) * 960, (y / (-12) + 0.5) * 960, this.items[i].res ? "green" : "red")
+      }
+    }
   }
 }

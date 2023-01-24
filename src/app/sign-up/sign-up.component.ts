@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
+import {HttpService} from "../http-service.service";
+import {User} from "../type";
+import {parseJson} from "@angular/cli/src/utilities/json-file";
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
+  providers: [ HttpService ],
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
@@ -12,6 +16,10 @@ export class SignUpComponent {
     password: '',
     passwordRepeat: ''
   }
+
+  signUpUrl: string = 'http://127.0.0.1:8080/backend/api/auth/register';
+
+  constructor(private httpService: HttpService) {}
 
   passwordEquals() {
     if (this.signUpForm.password != this.signUpForm.passwordRepeat) {
@@ -33,7 +41,8 @@ export class SignUpComponent {
     }
   }
 
-  printForm(){
-    console.log(this.signUpForm);
+  sendForm(){
+    this.httpService.postDataDev(this.signUpUrl, "register",
+      {"Content-Type": "application/json;charset=utf-8"}, {"username": this.signUpForm.login, "password": this.signUpForm.password});
   }
 }
