@@ -1,60 +1,63 @@
-<form method="get" id="form">
-  <div class="data">
-    <label>X: </label>
-    <select size="1" name="x" id="x" required [(ngModel)]="form.x" #x="ngModel" (input)="checkForSubmit(x.valid, y.valid, r.value)">
-      <option value="" selected>Выберите  координату Х</option>
-      <option value="-4">-4</option>
-      <option value="-3">-3</option>
-      <option value="-2">-2</option>
-      <option value="-1">-1</option>
-      <option value="0">0</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-    </select>
-    <div *ngIf="x.invalid && (x.dirty || x.touched)">
-        <div *ngIf="x.errors?.['required']" style="color: red">
-          Координата Х не выбрана
-        </div>
+<div class="container_centered">
+  <form id="point_form" class="container_centered shadowing" [formGroup]="form">
+    <div>
+      <label>X: </label>
+      <mat-form-field appearance="outline">
+        <mat-label>Выберите x</mat-label>
+        <mat-select formControlName="x">
+          <mat-option value="-4">-4</mat-option>
+          <mat-option value="-3">-3</mat-option>
+          <mat-option value="-2">-2</mat-option>
+          <mat-option value="-1">-1</mat-option>
+          <mat-option value="0">0</mat-option>
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+          <mat-option value="3">3</mat-option>
+          <mat-option value="4">4</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-    <br/>
-
-    <label>Y ∈ [-3;3]: </label>
-    <input type="number" id="y" name="y" [(ngModel)]="form.y" #y="ngModel" required min="-3" max="3"
-           (input)="checkForSubmit(x!.valid, y!.valid, r!.value)"/>
-    <div *ngIf="y.invalid && (y.dirty || y.touched)">
-      <div *ngIf="y.errors?.['min']" style="color: red">
-        Координата Y не может быть меньше -3
-      </div>
-      <div *ngIf="y.errors?.['max']" style="color: red">
-        Координата Y не может быть больше 3
-      </div>
-      <div *ngIf="y.errors?.['required']" style="color: red">
-        Координата Y не задана
-      </div>
+    <div>
+      <label>Y:</label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          type="number"
+          max="3"
+          min="-3"
+          placeholder="(-3; 3)"
+          formControlName="y"
+        >
+        <mat-error *ngIf="yControl().invalid">
+          <ng-container *ngIf="yControl().value ">
+            Y вне диапазона (-3; 3)
+          </ng-container>
+        </mat-error>
+      </mat-form-field>
     </div>
-    <br/>
-
-    <label>R: </label>
-    <select size="1" name="r" id="r" required [(ngModel)]="form.r" #r="ngModel" (change)="changeR(r.value, x.valid, y.valid)">
-      <option value="" selected>Выберите радиус</option>
-      <option value="-4">-4</option>
-      <option value="-3">-3</option>
-      <option value="-2">-2</option>
-      <option value="-1">-1</option>
-      <option value="0">0</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-    </select>
-    <br/>
-    <div *ngIf="r.invalid && (r.dirty || r.touched)">
-      <div *ngIf="r.errors?.['required']" style="color: red; margin-bottom: 1%">
-        Радиус не выбран
-      </div>
+    <div>
+      <label>R: </label>
+      <mat-form-field appearance="outline">
+        <mat-label>Выберите r</mat-label>
+        <mat-select
+          (selectionChange)="changeR()"
+          formControlName="r">
+          <mat-option value="-4">-4</mat-option>
+          <mat-option value="-3">-3</mat-option>
+          <mat-option value="-2">-2</mat-option>
+          <mat-option value="-1">-1</mat-option>
+          <mat-option value="0">0</mat-option>
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+          <mat-option value="3">3</mat-option>
+          <mat-option value="4">4</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-  </div>
-  <button id="sbmt" type="submit" value="Отправить" disabled="disabled" (click)="submit()">Отправить</button>
-</form>
+    <button
+      color="primary"
+      mat-raised-button
+      (click)="submit()">Отправить
+    </button>
+  </form>
+</div>

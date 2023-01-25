@@ -2,28 +2,28 @@ import {Component} from '@angular/core';
 import {HttpService} from "../http-service.service";
 
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Token} from "../type";
+import {ApiResponse, Token} from "../type";
 import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   providers: [HttpService],
-  styleUrls: ['./sign-up.component.css']
+  styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent {
 
   public signUpForm = new FormGroup({
     // name: new FormControl(1, Validators.required),
-    username: new FormControl(1, Validators.required),
-    password: new FormControl(11111111, Validators.compose([
+    username: new FormControl(112, Validators.required),
+    password: new FormControl(12345678, Validators.compose([
       Validators.required,
       Validators.minLength(8)
-      ])),
-    passwordRepeat: new FormControl(11111111, Validators.compose([
+    ])),
+    passwordRepeat: new FormControl(12345678, Validators.compose([
       Validators.required,
       Validators.minLength(8),
-  ]))
+    ]))
   });
 
 
@@ -33,24 +33,22 @@ export class SignUpComponent {
   ) {
   }
 
-  usernameControl = () => this.signUpForm.controls.username;
-  passwordControl = () => this.signUpForm.controls.password;
-  passwordRepeatControl = () => this.signUpForm.controls.password;
-
-  isPasswordRepeated() {
-    return this.signUpForm.value.password == this.signUpForm.value.passwordRepeat;
+  isPasswordRepeated(): boolean {
+    return this.signUpForm.controls.password.value == this.signUpForm.controls.passwordRepeat.value;
   }
 
+  usernameControl = () => this.signUpForm.controls.username;
+  passwordControl = () => this.signUpForm.controls.password;
+  passwordRepeatControl = () => this.signUpForm.controls.passwordRepeat;
+
   sendForm() {
-    this.httpService.postData<Token>( "/backend/api/auth/register", false,{
+    this.httpService.postData<Token>("/backend/api/auth/register", false, {
       username: this.signUpForm.getRawValue().username,
       password: this.signUpForm.getRawValue().password
     }).subscribe(
       (res: Token) => {
-        console.log("Storage до добавления токена регистрации: " + sessionStorage)
-        sessionStorage.setItem('registerToken', res.token);
-        console.log("Storage после добавления токена регистрации: " + sessionStorage)
-        this._router.navigate(['login'])
+        if (res.token) sessionStorage.setItem('registerToken', res.token);
+        this._router.navigate(['/'])
       }
     )
   }

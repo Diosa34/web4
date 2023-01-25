@@ -39,12 +39,12 @@ export class SvgComponent {
     svgOrG.innerHTML += `<circle cx="${x}" cy="${y}" r='7' fill="${resultFill}"/>`;
   }
 
-  changeArea(radius: string) {
+  changeArea(radius: number) {
     for (let i = -4; i < 5; i++) {
       // @ts-ignore
       document.getElementById(i.toString() + 'r').innerHTML = '';
     }
-    let r = Number(radius);
+    let r = radius;
     this.point.r = r;
     let areaFill: Number = 810 - r
     let id: string = radius + "r"

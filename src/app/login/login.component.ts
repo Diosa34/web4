@@ -8,12 +8,12 @@ import {Router} from "@angular/router";
   selector: 'app-login',
   templateUrl: './login.component.html',
   providers: [HttpService],
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
   public loginForm = new FormGroup({
-      username: new FormControl(null, Validators.required),
-      password: new FormControl(null, Validators.required),
+      username: new FormControl(112, Validators.required),
+      password: new FormControl(12345678, Validators.required),
     }
   )
 
@@ -30,13 +30,8 @@ export class LoginComponent {
       password: this.loginForm.getRawValue().password
     }).subscribe(
       (res: Token) => {
-        // @ts-ignore
-        if (res.status === 200) {
-          console.log("Storage до добавления токена авторизации: " + sessionStorage)
-          sessionStorage.setItem('loginToken', res.token);
-          console.log("Storage после добавления токена авторизации: " + sessionStorage)
-          this._router.navigate(['main-page'])
-        }
+        sessionStorage.setItem('loginToken', res.token);
+        this._router.navigate(['/'])
       }
     )
   }

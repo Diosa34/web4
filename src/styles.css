@@ -2,5 +2,24 @@
 /*  background-image: url("src/kustarnik.jpg");*/
 /*}*/
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+  min-height: 100vh
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.container_centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shadowing {
+  -webkit-box-shadow: 0px 7px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 7px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 7px 8px 0px rgba(34, 60, 80, 0.2);
+}

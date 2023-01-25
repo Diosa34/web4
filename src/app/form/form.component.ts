@@ -1,36 +1,38 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Point} from "../type";
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css'],
+  styleUrls: ['./form.component.scss'],
 })
 export class FormComponent {
-  form: any = {
-    x: '',
-    y: '',
-    r: '',
-  }
+  @Output() public changeREvent = new EventEmitter<number>();
+  @Output() public submitEvent = new EventEmitter<Point>();
 
-  @Output() changeREvent = new EventEmitter<string>();
-  @Output() submitEvent = new EventEmitter<any>();
+  public form = new FormGroup({
+    x: new FormControl(null, Validators.required),
+    y: new FormControl(null, Validators.compose([
+      Validators.required,
+      Validators.max(2.999999999),
+      Validators.min(-2.999999999),
+      Validators.maxLength(10)
+    ])),
+    r: new FormControl(null, Validators.required)
+  })
 
-  changeR(value: string | undefined, x: boolean | null, y: boolean | null) {
-    this.changeREvent.emit(value);
-    this.checkForSubmit(x, y, value);
-  }
 
-  checkForSubmit(x: boolean | null, y: boolean | null, r: string | undefined){
-    if (x && y && Number(r) > 0) {
-      // @ts-ignore
-      document.getElementById("sbmt").disabled = false;
-    } else {
-      // @ts-ignore
-      document.getElementById("sbmt").disabled = true;
-    }
+  xControl = () => this.form.controls.x;
+  yControl = () => this.form.controls.y;
+  rControl = () => this.form.controls.r;
+
+  changeR() {
+    this.changeREvent.emit(this.rControl().value as unknown as number);
   }
 
   submit() {
-    this.submitEvent.emit(this.form);
+    this.submitEvent.emit(this.form.getRawValue() as unknown as Point);
   }
+
 }

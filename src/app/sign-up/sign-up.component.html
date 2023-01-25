@@ -1,64 +1,39 @@
-<form [formGroup]="signUpForm">
-<!--  <div>-->
-<!--    <label>Имя: </label>-->
-<!--    <input-->
-<!--      type="text"-->
-<!--      required-->
-<!--      formControlName="name"-->
-<!--    />-->
-<!--    <div-->
-<!--      style="color: red"-->
-<!--      *ngIf="nameControl().invalid && (nameControl().dirty || nameControl().touched)">-->
-<!--      Имя не может быть пустым-->
-<!--    </div>-->
-<!--  </div>-->
+<div class="container_centered">
+
+  <form class="sign_up__form shadowing" [formGroup]="signUpForm">
+
+    <h2>Регистрация</h2>
+    <mat-form-field appearance="fill">
+      <mat-label>Логин</mat-label>
+      <input matInput placeholder="Логин" formControlName="username" required>
+      <mat-error *ngIf="usernameControl().invalid">
+        Не может быть пустым
+      </mat-error>
+    </mat-form-field>
 
 
-  <div>
-    <label>Логин: </label>
-    <input
-      type="text"
-      required
-      formControlName="username"
-    />
-    <div
-      style="color: red"
-      *ngIf="usernameControl().invalid && (usernameControl().dirty || usernameControl().touched)">
-        Логин не может быть пустым
-    </div>
-  </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Пароль</mat-label>
+      <input matInput placeholder="Пароль" type="text" formControlName="password" required>
+      <mat-error *ngIf="passwordControl().invalid">
+        Пароль не менее 8 символов
+      </mat-error>
+    </mat-form-field>
 
-
-  <div>
-    <label>Пароль: </label>
-    <input
-      type="password"
-      placeholder="password"
-      formControlName="password"
-    />
-    <div
-      style="color: red"
-      *ngIf="passwordControl().invalid && (passwordControl().dirty || passwordControl().touched)">
-        Пароль должен включать не менее 8 символов
-    </div>
-  </div>
-
-
-  <div>
-    <label>Пароль ещё раз: </label>
-    <input
-      type="password"
-      formControlName="passwordRepeat"
-    />
-    <div
-      style="color: red"
-      *ngIf="!isPasswordRepeated() && (passwordControl().dirty || passwordControl().touched)">
-      Пароли не совпадают
-    </div>
-  </div>
-  <br/>
-  <button
-    [disabled]="!signUpForm.valid && !isPasswordRepeated()"
-    (click)="sendForm()"
-  >Зарегистрироваться</button>
-</form>
+    <mat-form-field appearance="fill">
+      <mat-label>Повторите пароль</mat-label>
+      <input matInput placeholder="Пароль" type="text" formControlName="passwordRepeat" required>
+      <mat-error *ngIf="!isPasswordRepeated()">
+        Пароли не совпадают
+      </mat-error>
+    </mat-form-field>
+    <a href="/login">Уже есть аккаунт? <u>Войдите</u></a>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!signUpForm.valid || !isPasswordRepeated()"
+      (click)="sendForm()"
+    >Зарегистрироваться
+    </button>
+  </form>
+</div>

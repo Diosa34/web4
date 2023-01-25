@@ -11,9 +11,13 @@ import {AppComponent} from "./app.component";
 import {AppRoutingModule} from "./app-routing.module";
 import { TableComponent } from './table/table.component';
 import {HttpClientModule} from "@angular/common/http";
-import { ErrorComponent } from './error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {MatSnackBarModule} from '@angular/material/snack-bar'
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +27,6 @@ import {MatSnackBarModule} from '@angular/material/snack-bar'
     FormComponent,
     SignUpComponent,
     TableComponent,
-    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,11 @@ import {MatSnackBarModule} from '@angular/material/snack-bar'
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

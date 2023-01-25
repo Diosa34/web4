@@ -1,33 +1,29 @@
-<form [formGroup]="loginForm">
-  <div>
-    <label>Логин: </label>
-    <input
-      type="text"
-      required
-      formControlName="username"
-    />
-    <div
-      style="color: red"
-      *ngIf="usernameControl().invalid && (usernameControl().dirty || usernameControl().touched)">
-      Логин не может быть пустым
-    </div>
-  </div>
-  <div>
-    <label>Пароль: </label>
-    <input
-      type="password"
-      placeholder="password"
-      formControlName="password"
-    />
-    <div
-      style="color: red"
-      *ngIf="passwordControl().invalid && (passwordControl().dirty || passwordControl().touched)">
-      Пароль не может быть пустым
-    </div>
-  </div>
+<div class="container_centered">
+  <form class="login__form shadowing" [formGroup]="loginForm">
+    <h2>Вход</h2>
+    <mat-form-field appearance="fill">
+      <mat-label>Логин</mat-label>
+      <input matInput placeholder="Логин" formControlName="username" required>
+      <mat-error *ngIf="usernameControl().invalid && (usernameControl().dirty || usernameControl().touched)">
+        Не может быть пустым
+      </mat-error>
+    </mat-form-field>
 
-  <button
-    [disabled]="!loginForm.valid"
-    (click)="sendForm()"
-  >Войти</button>
-</form>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Пароль</mat-label>
+      <input matInput type="password" placeholder="Пароль" formControlName="password" required>
+      <mat-error *ngIf="passwordControl().invalid && (passwordControl().dirty || passwordControl().touched)">
+        Не может быть пустым
+      </mat-error>
+    </mat-form-field>
+    <a href="/sign-up">Еще нет аккаунта? <u>Зарегистрируйтесь</u></a>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!loginForm.valid"
+      (click)="sendForm()"
+    >Войти
+    </button>
+  </form>
+</div>
