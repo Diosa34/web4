@@ -26,6 +26,17 @@ export class HttpService {
     return headers;
   }
 
+  private _createHeadersWithToken(): HttpHeaders {
+    const headers = new HttpHeaders({
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-cache',
+      'Authorization': 'Bearer '+sessionStorage.getItem('loginToken'),
+      Pragma: 'no-cache',
+    });
+    return headers;
+  }
+
   private _removeNullParams(params: QueryParams | undefined): {} | null {
     if (!params) {
       return null;
@@ -72,12 +83,13 @@ export class HttpService {
 
   public postData<R>(
     url: string,
+    withToken: boolean,
     body?: {},
     params?: QueryParams,
   ): Observable<R> {
     return this._http
       .post<R>(url, body, {
-        headers: this._createDefaultHeaders(),
+        headers: withToken ? this._createHeadersWithToken() : this._createDefaultHeaders(),
         params: this._removeNullParams(params) || undefined,
       }).pipe(
         catchError<any, any>((err: HttpErrorResponse) =>

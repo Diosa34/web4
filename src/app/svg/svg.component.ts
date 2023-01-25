@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Point} from "../type";
+import {HttpService} from "../http-service.service";
 
 @Component({
     selector: 'app-svg',
@@ -16,8 +17,7 @@ export class SvgComponent {
 
   items: Array<Point> = [];
 
-  addUrl: string = 'http://127.0.0.1:8080/backend/api/auth/register';
-
+  constructor(private httpService: HttpService) {}
 
   svgClick(event: MouseEvent) {
     // @ts-ignore
@@ -64,7 +64,17 @@ export class SvgComponent {
 
   //заменить на функцию отрисовки всех точек из списка items
   newPoint(point: Point) {
-    // this.httpService.postDataDev(this.addUrl, "addPoint", {'Content-Type': 'application/json', 'Authorization': 'Bearer' + sessionStorage.getItem('token') }, point)
+    console.log(sessionStorage)
+    this.httpService.postData<Point>( "/backend/api/points", true, point).subscribe(
+      (res: Point) => {
+        // @ts-ignore
+        if (res.status === 200) {
+          this.items.push(res)
+          console.log(this.items)
+        }
+        this.drawPointsFromDB()
+      }
+    )
   }
 
   drawPointsFromDB() {

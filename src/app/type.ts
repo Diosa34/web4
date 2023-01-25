@@ -17,12 +17,6 @@ export interface Token {
   token: string;
 }
 
-export interface Point {
-  x: number;
-  y: number;
-  r: number;
-}
-
 export interface User {
   username: string;
   password: string;

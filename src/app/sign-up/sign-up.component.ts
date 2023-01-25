@@ -2,7 +2,8 @@ import {Component} from '@angular/core';
 import {HttpService} from "../http-service.service";
 
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Token, User} from "../type";
+import {Token} from "../type";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sign-up',
@@ -28,6 +29,7 @@ export class SignUpComponent {
 
   constructor(
     private httpService: HttpService,
+    private _router: Router,
   ) {
   }
 
@@ -40,12 +42,15 @@ export class SignUpComponent {
   }
 
   sendForm() {
-    this.httpService.postData<Token>( "/backend/api/auth/register", {
+    this.httpService.postData<Token>( "/backend/api/auth/register", false,{
       username: this.signUpForm.getRawValue().username,
       password: this.signUpForm.getRawValue().password
     }).subscribe(
       (res: Token) => {
-      console.log(res)
+        console.log("Storage до добавления токена регистрации: " + sessionStorage)
+        sessionStorage.setItem('registerToken', res.token);
+        console.log("Storage после добавления токена регистрации: " + sessionStorage)
+        this._router.navigate(['login'])
       }
     )
   }
