@@ -39,7 +39,7 @@
     <div
       style="color: red"
       *ngIf="passwordControl().invalid && (passwordControl().dirty || passwordControl().touched)">
-        Пароль должен включать буквы и цифры, не менее 8 символов
+        Пароль должен включать не менее 8 символов
     </div>
   </div>
 
@@ -52,7 +52,7 @@
     />
     <div
       style="color: red"
-      *ngIf="isPasswordRepeated() && (passwordControl().dirty || passwordControl().touched)">
+      *ngIf="!isPasswordRepeated() && (passwordControl().dirty || passwordControl().touched)">
       Пароли не совпадают
     </div>
   </div>
