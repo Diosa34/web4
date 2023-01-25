@@ -1,36 +1,30 @@
-<form>
-  <div>
-    <label>Имя: </label>
-    <input
-      type="text"
-      [(ngModel)]="signUpForm.name"
-      #name="ngModel"
-      required
-      name="name"
-      (input)="checkForSubmit(name.valid, login.valid, password.valid, passwordRepeat.valid)"
-    />
-    <div *ngIf="name.invalid && (name.dirty || name.touched)">
-      <div *ngIf="name.errors?.['required']" style="color: red">
-          Имя не может быть пустым
-      </div>
-    </div>
-  </div>
+<form [formGroup]="signUpForm">
+<!--  <div>-->
+<!--    <label>Имя: </label>-->
+<!--    <input-->
+<!--      type="text"-->
+<!--      required-->
+<!--      formControlName="name"-->
+<!--    />-->
+<!--    <div-->
+<!--      style="color: red"-->
+<!--      *ngIf="nameControl().invalid && (nameControl().dirty || nameControl().touched)">-->
+<!--      Имя не может быть пустым-->
+<!--    </div>-->
+<!--  </div>-->
 
 
   <div>
     <label>Логин: </label>
     <input
       type="text"
-      [(ngModel)]="signUpForm.login"
-      #login="ngModel"
       required
-      name="login"
-      (input)="checkForSubmit(name.valid, login.valid, password.valid, passwordRepeat.valid)"
+      formControlName="username"
     />
-    <div *ngIf="login.invalid && (login.dirty || login.touched)">
-      <div *ngIf="login.errors?.['required']" style="color: red">
-          Логин не может быть пустым
-      </div>
+    <div
+      style="color: red"
+      *ngIf="usernameControl().invalid && (usernameControl().dirty || usernameControl().touched)">
+        Логин не может быть пустым
     </div>
   </div>
 
@@ -39,19 +33,13 @@
     <label>Пароль: </label>
     <input
       type="password"
-      [(ngModel)]="signUpForm.password"
-      #password="ngModel"
-      minlength="8"
-      pattern="\w{8,}"
-      placeholder="1abcdefg"
-      name="password"
-      required
-      (input)="passwordEquals(); checkForSubmit(name.valid, login.valid, password.valid, passwordRepeat.valid)"
+      placeholder="password"
+      formControlName="password"
     />
-    <div *ngIf="password.invalid && (password.dirty || password.touched)">
-      <div *ngIf="password.errors?.['pattern'] || password.errors?.['required']" style="color: red">
-          Пароль должен включать буквы и цифры, не менее 8 символов
-      </div>
+    <div
+      style="color: red"
+      *ngIf="passwordControl().invalid && (passwordControl().dirty || passwordControl().touched)">
+        Пароль должен включать буквы и цифры, не менее 8 символов
     </div>
   </div>
 
@@ -60,17 +48,17 @@
     <label>Пароль ещё раз: </label>
     <input
       type="password"
-      [(ngModel)]="signUpForm.passwordRepeat"
-      #passwordRepeat="ngModel"
-      minlength="8"
-      pattern="\w{8,}"
-      placeholder="1abcdefg"
-      required
-      name="passwordRepeat"
-      (input)="passwordEquals(); checkForSubmit(name.valid, login.valid, password.valid, passwordRepeat.valid)"
+      formControlName="passwordRepeat"
     />
+    <div
+      style="color: red"
+      *ngIf="isPasswordRepeated() && (passwordControl().dirty || passwordControl().touched)">
+      Пароли не совпадают
+    </div>
   </div>
-  <span id="equals-warning" style="display: none; color: red">Пароли не совпадают</span>
   <br/>
-  <button id="sign-up-btn" (click)="sendForm()" disabled="disabled">Зарегистрироваться</button>
+  <button
+    [disabled]="!signUpForm.valid && !isPasswordRepeated()"
+    (click)="sendForm()"
+  >Зарегистрироваться</button>
 </form>

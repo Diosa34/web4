@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {QueryParams} from "./type";
@@ -15,7 +15,7 @@ export class HttpService {
   ) {
   }
 
-  errorMessage = '';
+  private errorMessage = '';
 
   private _createDefaultHeaders(): HttpHeaders {
     const headers = new HttpHeaders({
@@ -87,9 +87,17 @@ export class HttpService {
       );
   }
 
-  public async postDataDev(url: string, _reqName: string, headers?: {}, body?: {}) {
-    // @ts-ignore
-    return await fetch(url, {method: 'POST', mode: 'no-cors', cache: 'no-cache', headers: headers, body: JSON.stringify(body)})
+  // public async postDataDev(url: string, body?: any) {
+  //   return await fetch(SERVER_URL + url, {
+  //     method: 'POST',
+  //     cache: 'no-cache',
+  //     mode: 'cors',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(body)
+  //   })
     // .then((res) => {
 //   if (res.status === 200) {
 //   switch (_reqName) {
@@ -102,7 +110,7 @@ export class HttpService {
 //   }
 // }
 // }
-  }
+//   }
 
 
 // )
@@ -125,9 +133,12 @@ export class HttpService {
 
   private _handleError(e: HttpErrorResponse) {
     switch (e.status) {
-      case 405: this.errorMessage = 'Для получения доступа к данной странице необходимо авторизоваться'; break;
-      default: this.errorMessage = e.message
+      case 405:
+        this.errorMessage = 'Для получения доступа к данной странице необходимо авторизоваться';
+        break;
+      default:
+        this.errorMessage = e.message
     }
-    this._router.navigate(['error-page', this.errorMessage]);
+    // this._router.navigate(['error-page', this.errorMessage]);
   }
 }
