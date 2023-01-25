@@ -13,6 +13,10 @@ export interface ApiError{
   type: string,
 }
 
+export interface Token {
+  token: string;
+}
+
 export interface Point {
   x: number;
   y: number;
@@ -24,15 +28,15 @@ export interface User {
   password: string;
 }
 
-export interface TableString {
-  "id": number,
-  "x": number,
-  "y": number,
-  "r": number,
-  "res": boolean,
-  "executionTime": number,
-  "message": string,
-  "dateTime": string,
-  "username": string
+export interface Point {
+  id?: number,
+  x: number,
+  y: number,
+  r: number,
+  res?: boolean,
+  executionTime?: number,
+  message?: string,
+  dateTime?: string,
+  username?: string
 }
 

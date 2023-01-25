@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {TableService} from "./table.service";
-import {TableString} from "../type";
+import {Point} from "../type";
 
 @Component({
   selector: 'app-table',
@@ -9,5 +9,5 @@ import {TableString} from "../type";
   styleUrls: ['./table.component.css']
 })
 export class TableComponent {
-  @Input() items: Array<TableString> = [];
+  @Input() items: Array<Point> = [];
 }

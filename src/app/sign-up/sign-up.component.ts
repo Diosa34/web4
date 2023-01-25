@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {HttpService} from "../http-service.service";
 
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {User} from "../type";
+import {Token, User} from "../type";
 
 @Component({
   selector: 'app-sign-up',
@@ -14,12 +14,12 @@ export class SignUpComponent {
 
   public signUpForm = new FormGroup({
     // name: new FormControl(1, Validators.required),
-    username: new FormControl(null, Validators.required),
-    password: new FormControl(null, Validators.compose([
+    username: new FormControl(1, Validators.required),
+    password: new FormControl(11111111, Validators.compose([
       Validators.required,
       Validators.minLength(8)
       ])),
-    passwordRepeat: new FormControl(null, Validators.compose([
+    passwordRepeat: new FormControl(11111111, Validators.compose([
       Validators.required,
       Validators.minLength(8),
   ]))
@@ -40,11 +40,11 @@ export class SignUpComponent {
   }
 
   sendForm() {
-    this.httpService.postData<User>( "/backend/api/auth/register", {
+    this.httpService.postData<Token>( "/backend/api/auth/register", {
       username: this.signUpForm.getRawValue().username,
       password: this.signUpForm.getRawValue().password
     }).subscribe(
-      (res: User) => {
+      (res: Token) => {
       console.log(res)
       }
     )

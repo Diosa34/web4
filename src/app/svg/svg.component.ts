@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Point, TableString} from "../type";
+import {Point} from "../type";
 
 @Component({
     selector: 'app-svg',
@@ -14,7 +14,7 @@ export class SvgComponent {
     r: 0,
   }
 
-  items: Array<TableString> = [];
+  items: Array<Point> = [];
 
   addUrl: string = 'http://127.0.0.1:8080/backend/api/auth/register';
 

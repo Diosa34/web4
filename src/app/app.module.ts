@@ -12,7 +12,8 @@ import {AppRoutingModule} from "./app-routing.module";
 import { TableComponent } from './table/table.component';
 import {HttpClientModule} from "@angular/common/http";
 import { ErrorComponent } from './error/error.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import {MatSnackBarModule} from '@angular/material/snack-bar'
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,8 @@ import { ErrorComponent } from './error/error.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
