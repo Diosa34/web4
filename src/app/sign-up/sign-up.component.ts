@@ -15,12 +15,12 @@ export class SignUpComponent {
 
   public signUpForm = new FormGroup({
     // name: new FormControl(1, Validators.required),
-    username: new FormControl(111, Validators.required),
-    password: new FormControl(12345678, Validators.compose([
+    username: new FormControl(null, Validators.required),
+    password: new FormControl(null, Validators.compose([
       Validators.required,
       Validators.minLength(8)
     ])),
-    passwordRepeat: new FormControl(12345678, Validators.compose([
+    passwordRepeat: new FormControl(null, Validators.compose([
       Validators.required,
       Validators.minLength(8),
     ]))

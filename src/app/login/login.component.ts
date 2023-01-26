@@ -12,8 +12,8 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent {
   public loginForm = new FormGroup({
-      username: new FormControl(111, Validators.required),
-      password: new FormControl(12345678, Validators.required),
+      username: new FormControl(null, Validators.required),
+      password: new FormControl(null, Validators.required),
     }
   )
 
