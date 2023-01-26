@@ -8,7 +8,6 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-svg',
   templateUrl: './svg.component.html',
-  // providers: [ SvgService ],
   styleUrls: ['./svg.component.scss']
 })
 export class SvgComponent {
@@ -19,7 +18,7 @@ export class SvgComponent {
     r: 0,
   }
 
-  items: Array<Point> = [];
+  items: Point[] = [];
 
   constructor(
     private httpService: HttpService,
@@ -36,11 +35,11 @@ export class SvgComponent {
       return
     }
     // @ts-ignore
-    let svgCoord = event.target.getBoundingClientRect() // DOMRect object
+    let svgCoord = document.getElementById("svg").getBoundingClientRect() // DOMRect object
 
     let xPartOfSvg = (event.clientX - svgCoord.x) / svgCoord.width // координата(в долях) клика относительно размеров svg
     let yPartOfSvg = (event.clientY - svgCoord.y) / svgCoord.height
-    this.drawPoint(event.target, (xPartOfSvg) * 960, (yPartOfSvg) * 960)
+    this.drawPoint(document.getElementById(this.point.r.toString() + 'r'), (xPartOfSvg) * 960, (yPartOfSvg) * 960)
 
     //координаты в системе координат графика(должны быть отправлены на сервер), а не в системе координат пикселей
     // this.point.x = (xPartOfSvg - 0.5) * 12
@@ -60,33 +59,37 @@ export class SvgComponent {
     this.point.r = radius
     for (let i = -4; i < 5; i++) {
       // @ts-ignore
-      document.getElementById(i.toString() + 'r').innerHTML = '';
+      document.getElementById(i.toString() + 'r').style.display = "none";
     }
     let r = radius;
     this.point.r = r;
-    let areaFill: Number = 810 - r
     let id: string = radius + "r"
     // @ts-ignore
-    document.getElementById(id).innerHTML += `<path id="path${r}"
-              d="M 480 480
-              L ${480 - 80 * r} 480
-              L 480 ${480 - 80 * r}
-              L 480 ${480 - 40 * r}
-              L ${480 + 80 * r} ${480 - 40 * r}
-              L ${480 + 80 * r} 480
-              L 480 480
-              L 480 ${480 + 40 * r}
-              A ${40 * r} ${40 * r} 0 0 1 ${480 - 40 * r} 480
-              L 480 480" stroke="black" fill="#fc${areaFill}f""/>`;
+    document.getElementById(id).style.display = "inline-block";
+    this.allPointsRender()
   }
 
   //заменить на функцию отрисовки всех точек из списка items
   newPoint(point: Point) {
     this.httpService.postData<Point>("/backend/api/points", point, true).subscribe(
-      (res: Point) => {
-        this.table.getPoints();
+      (res) => {
+        this.table.getPoints()
+        this.allPointsRender()
       }
     )
+  }
+
+  allPointsRender(){
+    for (let i = 0; i < this.items.length; i++) {
+      // @ts-ignore
+      if (this.items[i].r == this.point.r) {
+        let x = Number(this.items[i].x);
+        let y = Number(this.items[i].y);
+        if (x <= 960 && y <= 960) {
+          this.drawPoint(document.getElementById(this.items[i].r.toString()+"r"), (x/12 + 0.5) * 960, (y/(-12) + 0.5) * 960, this.items[i].res ? 'green' : 'red')
+        }
+      }
+    }
   }
 
   deletePoints() {
@@ -101,6 +104,7 @@ export class SvgComponent {
         this.table.getPoints();
       }
     )
+    this.allPointsRender()
   }
 
   logout() {

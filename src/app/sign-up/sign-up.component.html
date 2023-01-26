@@ -14,7 +14,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Пароль</mat-label>
-      <input matInput placeholder="Пароль" type="text" formControlName="password" required>
+      <input matInput placeholder="Пароль" type="password" formControlName="password" required>
       <mat-error *ngIf="passwordControl().invalid">
         Пароль не менее 8 символов
       </mat-error>
@@ -22,7 +22,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Повторите пароль</mat-label>
-      <input matInput placeholder="Пароль" type="text" formControlName="passwordRepeat" required>
+      <input matInput placeholder="Пароль" type="password" formControlName="passwordRepeat" required>
       <mat-error *ngIf="!isPasswordRepeated()">
         Пароли не совпадают
       </mat-error>
