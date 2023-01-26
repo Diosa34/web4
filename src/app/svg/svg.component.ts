@@ -112,4 +112,8 @@ export class SvgComponent {
     this._router.navigate(['/login'])
     // this.httpService.postData("backend/api/auth/logout", undefined, true).subscribe()
   }
+
+  redrawPoints(points: Point[]) {
+    this.items = points;
+  }
 }

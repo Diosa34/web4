@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit,EventEmitter, ChangeDetectorRef, Component, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Point} from "../type";
 import {MatTableDataSource} from "@angular/material/table";
 import {HttpService} from "../http-service.service";
@@ -11,6 +11,7 @@ import {MatPaginator} from "@angular/material/paginator";
 })
 export class TableComponent implements OnInit, AfterViewInit {
   @Input() items: Point[] = [];
+  @Output() public pointsRedraw = new EventEmitter<Point[]>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   public displayedColumns: string[] = [
     "x",
@@ -40,6 +41,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.httpService.getData<Point[]>("/backend/api/points", undefined, true)
       .subscribe((res) => {
         this.dataSource.data = res;
+        this.pointsRedraw.emit(res);
         this._cdr.markForCheck();
       })
   }

@@ -164,4 +164,6 @@
     (changeREvent)="changeArea($event)" (submitEvent)="newPoint($event)"></app-form>
 </div>
 
-<app-table #table [items]="items"></app-table>
+<app-table
+  (pointsRedraw)="redrawPoints($event)"
+  #table [items]="items"></app-table>
