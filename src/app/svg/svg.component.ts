@@ -77,19 +77,20 @@ export class SvgComponent {
     this.httpService.postData<Point>("/backend/api/points", point, true).subscribe(
       (res) => {
         this.table.getPoints()
-        this.allPointsRender()
+        this.drawPoint(document.getElementById(res.r.toString()+"dot"), (res.x/12 + 0.5) * 960, (res.y/(-12) + 0.5) * 960, res.res ? 'green' : 'red')
       }
     )
+    this.allPointsRender()
   }
 
   allPointsRender(){
-    for (let i = 0; i < this.items.length; i++) {
+    for (let i = 0; i < this.table.items.length; i++) {
       // @ts-ignore
-      if (this.items[i].r == this.point.r) {
-        let x = Number(this.items[i].x);
-        let y = Number(this.items[i].y);
+      if (this.table.items[i].r == this.point.r) {
+        let x = Number(this.table.items[i].x);
+        let y = Number(this.table.items[i].y);
         if (x <= 960 && y <= 960) {
-          this.drawPoint(document.getElementById(this.items[i].r.toString()+"dot"), (x/12 + 0.5) * 960, (y/(-12) + 0.5) * 960, this.items[i].res ? 'green' : 'red')
+          this.drawPoint(document.getElementById(this.table.items[i].r.toString()+"dot"), (x/12 + 0.5) * 960, (y/(-12) + 0.5) * 960, this.table.items[i].res ? 'green' : 'red')
         }
       }
     }
