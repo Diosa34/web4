@@ -18,9 +18,8 @@ export class FormComponent {
     x: new FormControl(null, Validators.required),
     y: new FormControl(null, Validators.compose([
       Validators.required,
-      Validators.max(2.999999999),
-      Validators.min(-2.999999999),
-      Validators.maxLength(10)
+      Validators.max(3),
+      Validators.min(-3)
     ])),
     r: new FormControl(null, Validators.required)
   })

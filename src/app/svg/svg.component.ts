@@ -74,7 +74,12 @@ export class SvgComponent {
 
   //заменить на функцию отрисовки всех точек из списка items
   newPoint(point: Point) {
-    this.httpService.postData<Point>("/backend/api/points", point, true).subscribe(
+    const pointDto = {
+      x: point.x,
+      y: point.y.toString().replace(/,/g, '.'),
+      r: point.r
+    }
+    this.httpService.postData<Point>("/backend/api/points", pointDto, true).subscribe(
       (res) => {
         this.table.getPoints()
         this.drawPoint(document.getElementById(res.r.toString()+"dot"), (res.x/12 + 0.5) * 960, (res.y/(-12) + 0.5) * 960, res.res ? 'green' : 'red')

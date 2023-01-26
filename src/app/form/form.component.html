@@ -24,10 +24,8 @@
           matInput
           type="text"
           max="3"
-          maxlength="10"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
           min="-3"
-          placeholder="(-3; 3)"
+          placeholder="[-3; 3]"
           formControlName="y"
         >
         <mat-error *ngIf="yControl().invalid">
