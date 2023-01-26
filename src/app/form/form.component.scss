@@ -4,7 +4,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: $main_color;
+  //background: $main_color;
+  justify-content: center;
   padding: 60px;
   border-radius: 10px;
   div{
@@ -13,3 +14,11 @@
     }
   }
 }
+
+.button_container{
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-left: 20px;
+}
+

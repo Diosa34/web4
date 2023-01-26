@@ -1,20 +1,40 @@
-<table class="result-table" id="resultTable" style="text-align: center">
-  <tr>
-    <td>Дата</td>
-    <td>X</td>
-    <td>Y</td>
-    <td>R</td>
-    <td>Попадание</td>
-    <td>Время выполнения</td>
-    <td>Пользователь</td>
-  </tr>
-<!--  <tr *ngFor="let item of items">-->
-<!--    <td>{{item.dateTime}}</td>-->
-<!--    <td>{{item.x}}</td>-->
-<!--    <td>{{item.y}}</td>-->
-<!--    <td>{{item.r}}</td>-->
-<!--    <td>{{item.res}}</td>-->
-<!--    <td>{{item.executionTime}}</td>-->
-<!--    <td>{{item.username}}</td>-->
-<!--  </tr>-->
+<table
+  mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="x">
+    <th mat-header-cell *matHeaderCellDef> X</th>
+    <td mat-cell *matCellDef="let point"> {{point.x | number:'1.3'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="y">
+    <th mat-header-cell *matHeaderCellDef> Y</th>
+    <td mat-cell *matCellDef="let point"> {{toFixed(point.y)| number:'1.3' }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="r">
+    <th mat-header-cell *matHeaderCellDef> R</th>
+    <td mat-cell *matCellDef="let point"> {{point.r}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="res">
+    <th mat-header-cell *matHeaderCellDef> Результат</th>
+    <td mat-cell *matCellDef="let point"> {{point.res}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef> Дата</th>
+    <td mat-cell *matCellDef="let point"> {{point.dateTime}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="exec">
+    <th mat-header-cell *matHeaderCellDef> Время выполнения</th>
+    <td mat-cell *matCellDef="let point"> {{point.executionTime}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<mat-paginator
+  [length]="dataSource.data.length"
+  [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

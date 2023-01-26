@@ -1,5 +1,5 @@
-<div class="container_centered">
-  <form id="point_form" class="container_centered shadowing" [formGroup]="form">
+<div class="">
+  <form id="point_form" class="container_centered" [formGroup]="form">
     <div>
       <label>X: </label>
       <mat-form-field appearance="outline">
@@ -24,6 +24,8 @@
           matInput
           type="number"
           max="3"
+          maxlength="10"
+          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
           min="-3"
           placeholder="(-3; 3)"
           formControlName="y"
@@ -54,10 +56,17 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <button
-      color="primary"
-      mat-raised-button
-      (click)="submit()">Отправить
-    </button>
+    <div class="button_container">
+      <button
+        color="primary"
+        mat-raised-button
+        [disabled]="form.invalid"
+        (click)="submit()">Отправить
+      </button>
+      <button
+        mat-raised-button
+        (click)="delete()"> Удалить
+      </button>
+    </div>
   </form>
 </div>

@@ -5,6 +5,7 @@ import {QueryParams} from "./type";
 import {Observable} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {MatSnackBar} from '@angular/material/snack-bar';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,25 +17,17 @@ export class HttpService {
   ) {
   }
 
-  private _createDefaultHeaders(): HttpHeaders {
-    const headers = new HttpHeaders({
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json',
-      'Cache-Control': 'no-cache',
-      Pragma: 'no-cache',
-    });
-    return headers;
-  }
 
-  private _createHeadersWithToken(): HttpHeaders {
-    const headers = new HttpHeaders({
-      'X-Requested-With': 'XMLHttpRequest',
+  private _createDefaultHeaders(isTokenNeeded?: boolean): HttpHeaders {
+    if (isTokenNeeded)
+      return new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      });
+
+    else return new HttpHeaders({
       'Content-Type': 'application/json',
-      'Cache-Control': 'no-cache',
-      'Authorization': 'Bearer '+sessionStorage.getItem('loginToken'),
-      Pragma: 'no-cache',
     });
-    return headers;
   }
 
   private _removeNullParams(params: QueryParams | undefined): {} | null {
@@ -51,10 +44,11 @@ export class HttpService {
   public getData<R>(
     url: string,
     params?: QueryParams,
+    isTokenNeeded?: boolean
   ): Observable<R> {
     return this._http
       .get<R>(url, {
-        headers: this._createDefaultHeaders(),
+        headers: this._createDefaultHeaders(isTokenNeeded),
         params: this._removeNullParams(params) || undefined,
       })
       .pipe(
@@ -68,10 +62,11 @@ export class HttpService {
     url: string,
     body?: {},
     params?: QueryParams,
+    isTokenNeeded?: boolean
   ): Observable<R> {
     return this._http
       .put<R>(url, body, {
-        headers: this._createDefaultHeaders(),
+        headers: this._createDefaultHeaders(isTokenNeeded),
         params: this._removeNullParams(params) || undefined,
       })
       .pipe(
@@ -83,14 +78,12 @@ export class HttpService {
 
   public postData<R>(
     url: string,
-    withToken: boolean,
     body?: {},
-    params?: QueryParams,
+    isTokenNeeded?: boolean
   ): Observable<R> {
     return this._http
       .post<R>(url, body, {
-        headers: withToken ? this._createHeadersWithToken() : this._createDefaultHeaders(),
-        params: this._removeNullParams(params) || undefined,
+        headers: this._createDefaultHeaders(isTokenNeeded),
       }).pipe(
         catchError<any, any>((err: HttpErrorResponse) =>
           this._handleError(err),
@@ -102,10 +95,11 @@ export class HttpService {
   public deleteData<R>(
     url: string,
     params?: QueryParams,
+    isTokenNeeded?: boolean
   ): Observable<R> {
     return this._http
       .delete<R>(url, {
-        headers: this._createDefaultHeaders(),
+        headers: this._createDefaultHeaders(isTokenNeeded),
         params: this._removeNullParams(params) || undefined,
       })
       .pipe(
@@ -117,9 +111,10 @@ export class HttpService {
 
   private _handleError(e: HttpErrorResponse) {
     const message = e.error.message || "Неизвестная ошибка";
-    this._snackBar.open(message, 'Закрыть', {
-      duration: 3000
-    })
+    if (e.status !== 400)
+      this._snackBar.open(message, 'Закрыть', {
+        duration: 3000
+      })
     if (e.status == 405) {
       this._router.navigate(['login']);
     }

@@ -1,17 +1,20 @@
 .header{
   font-family: "Monotype Corsiva", cursive;
-  width: 100%;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+
 }
 
 .name {
   font-family: inherit;
-  font-size: 50px;
+  font-size: 2rem;
   font-style: oblique;
-  padding-left: 1em;
   /*font-weight: bold;*/
 }
 
 .numbers {
-  text-align: right;
+  display: flex;
+  gap: 20px;
   font-size: 25px;
 }

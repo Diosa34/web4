@@ -1,5 +1,9 @@
 <div class="main_page">
-  <div class="center">
+  <mat-icon
+    (click)="logout()"
+    matTooltip="Выход"
+    class="logout">exit_to_app</mat-icon>
+  <div class="svg_container">
     <svg viewBox="0 0 960 960" id="svg" (click)="svgClick($event)">
       <g id="4r"></g>
       <g id="3r"></g>
@@ -62,6 +66,9 @@
       <text x="490" y="885">-5</text>
     </svg>
   </div>
-  <app-form (changeREvent)="changeArea($event)" (submitEvent)="newPoint($event)"></app-form>
+  <app-form
+    (deletePoints)="deletePoints()"
+    (changeREvent)="changeArea($event)" (submitEvent)="newPoint($event)"></app-form>
 </div>
-<app-table [items]="items"></app-table>
+
+<app-table #table [items]="items"></app-table>

@@ -1,3 +1,15 @@
 table {
-  margin: auto;
+  margin-top: 20px;
 }
+.mat-column-x , .mat-column-y, .mat-column-r, .mat-column-res, .mat-column-date , .mat-column-exec {
+  flex: none;
+  width: 10%;
+  text-align: center;
+}
+
+@media (max-width: 1000px) {
+  .mat-column-date , .mat-column-exec {
+    display: none;
+  }
+}
+

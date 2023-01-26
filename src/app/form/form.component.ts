@@ -1,6 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Point} from "../type";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogComponent} from "../dialog/dialog.component";
 
 @Component({
   selector: 'app-form',
@@ -10,6 +12,7 @@ import {Point} from "../type";
 export class FormComponent {
   @Output() public changeREvent = new EventEmitter<number>();
   @Output() public submitEvent = new EventEmitter<Point>();
+  @Output() public deletePoints = new EventEmitter();
 
   public form = new FormGroup({
     x: new FormControl(null, Validators.required),
@@ -22,6 +25,8 @@ export class FormComponent {
     r: new FormControl(null, Validators.required)
   })
 
+  constructor(private dialog: MatDialog) {
+  }
 
   xControl = () => this.form.controls.x;
   yControl = () => this.form.controls.y;
@@ -35,4 +40,11 @@ export class FormComponent {
     this.submitEvent.emit(this.form.getRawValue() as unknown as Point);
   }
 
+  delete() {
+    this.dialog.open(DialogComponent).afterClosed().subscribe(result => {
+      if (!result) return;
+
+      this.deletePoints.emit();
+    });
+  }
 }

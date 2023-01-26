@@ -1,13 +1,51 @@
-import {Component, Input} from '@angular/core';
-import {TableService} from "./table.service";
+import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Point} from "../type";
+import {MatTableDataSource} from "@angular/material/table";
+import {HttpService} from "../http-service.service";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  providers: [ TableService ],
   styleUrls: ['./table.component.css']
 })
-export class TableComponent {
-  @Input() items: Array<Point> = [];
+export class TableComponent implements OnInit, AfterViewInit {
+  @Input() items: Point[] = [];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  public displayedColumns: string[] = [
+    "x",
+    "y",
+    "r",
+    "res",
+    "exec",
+    "date",
+  ];
+  public dataSource: MatTableDataSource<Point> = new MatTableDataSource();
+
+  constructor(
+    private httpService: HttpService,
+    private _cdr: ChangeDetectorRef
+  ) {
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator
+  }
+
+  ngOnInit(): void {
+    this.getPoints()
+  }
+
+  public getPoints() {
+    this.httpService.getData<Point[]>("/backend/api/points", undefined, true)
+      .subscribe((res) => {
+        this.dataSource.data = res;
+        this._cdr.markForCheck();
+      })
+  }
+
+  toFixed(number: number) {
+    return Math.trunc(number * 1000) / 1000;
+  }
+
 }

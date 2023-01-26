@@ -15,7 +15,7 @@ export class SignUpComponent {
 
   public signUpForm = new FormGroup({
     // name: new FormControl(1, Validators.required),
-    username: new FormControl(112, Validators.required),
+    username: new FormControl(111, Validators.required),
     password: new FormControl(12345678, Validators.compose([
       Validators.required,
       Validators.minLength(8)
@@ -42,12 +42,12 @@ export class SignUpComponent {
   passwordRepeatControl = () => this.signUpForm.controls.passwordRepeat;
 
   sendForm() {
-    this.httpService.postData<Token>("/backend/api/auth/register", false, {
+    this.httpService.postData<Token>("/backend/api/auth/register", {
       username: this.signUpForm.getRawValue().username,
       password: this.signUpForm.getRawValue().password
     }).subscribe(
       (res: Token) => {
-        if (res.token) sessionStorage.setItem('registerToken', res.token);
+        if (!!res.token) localStorage.setItem('token', res.token);
         this._router.navigate(['/'])
       }
     )

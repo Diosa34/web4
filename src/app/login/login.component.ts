@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent {
   public loginForm = new FormGroup({
-      username: new FormControl(112, Validators.required),
+      username: new FormControl(111, Validators.required),
       password: new FormControl(12345678, Validators.required),
     }
   )
@@ -25,12 +25,12 @@ export class LoginComponent {
   passwordControl = () => this.loginForm.controls.password;
 
   sendForm() {
-    this.httpService.postData<Token>("/backend/api/auth/login", false, {
+    this.httpService.postData<Token>("/backend/api/auth/login", {
       username: this.loginForm.getRawValue().username,
       password: this.loginForm.getRawValue().password
-    }).subscribe(
+    }, true).subscribe(
       (res: Token) => {
-        sessionStorage.setItem('loginToken', res.token);
+        if (!!res.token) localStorage.setItem('token', res.token);
         this._router.navigate(['/'])
       }
     )
