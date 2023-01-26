@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Point} from "../type";
 import {HttpService} from "../http-service.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -10,13 +10,14 @@ import {Router} from "@angular/router";
   templateUrl: './svg.component.html',
   styleUrls: ['./svg.component.scss']
 })
-export class SvgComponent {
+export class SvgComponent implements AfterViewInit {
   @ViewChild("table") table!: TableComponent;
   point: Point = {
     x: 0,
     y: 0,
     r: 0,
   }
+  username: any;
 
   items: Point[] = [];
 
@@ -25,6 +26,12 @@ export class SvgComponent {
     private _snackBar: MatSnackBar,
     private _router: Router,
   ) {
+  }
+
+  ngAfterViewInit(): void {
+    this.httpService.getData("/backend/api/auth/check-login", undefined, true).subscribe((res) => {
+      this.username = res;
+    })
   }
 
   svgClick(event: MouseEvent) {
@@ -82,27 +89,27 @@ export class SvgComponent {
     this.httpService.postData<Point>("/backend/api/points", pointDto, true).subscribe(
       (res) => {
         this.table.getPoints()
-        this.drawPoint(document.getElementById(res.r.toString()+"dot"), (res.x/12 + 0.5) * 960, (res.y/(-12) + 0.5) * 960, res.res ? 'green' : 'red')
+        this.drawPoint(document.getElementById(res.r.toString() + "dot"), (res.x / 12 + 0.5) * 960, (res.y / (-12) + 0.5) * 960, res.res ? 'green' : 'red')
       }
     )
     this.allPointsRender()
   }
 
-  allPointsRender(){
+  allPointsRender() {
     for (let i = 0; i < this.table.items.length; i++) {
       // @ts-ignore
       if (this.table.items[i].r == this.point.r) {
         let x = Number(this.table.items[i].x);
         let y = Number(this.table.items[i].y);
         if (x <= 960 && y <= 960) {
-          this.drawPoint(document.getElementById(this.table.items[i].r.toString()+"dot"), (x/12 + 0.5) * 960, (y/(-12) + 0.5) * 960, this.table.items[i].res ? 'green' : 'red')
+          this.drawPoint(document.getElementById(this.table.items[i].r.toString() + "dot"), (x / 12 + 0.5) * 960, (y / (-12) + 0.5) * 960, this.table.items[i].res ? 'green' : 'red')
         }
       }
     }
   }
 
   deletePoints() {
-    if (!this.table.dataSource.data?.length){
+    if (!this.table.dataSource.data?.length) {
       this._snackBar.open("У вас пока нет точек", 'Закрыть', {
         duration: 3000
       })

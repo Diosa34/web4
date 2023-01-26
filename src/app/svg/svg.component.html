@@ -1,8 +1,12 @@
 <div class="main_page">
-  <mat-icon
-    (click)="logout()"
-    matTooltip="Выход"
-    class="logout">exit_to_app</mat-icon>
+  <div class="logout_container">
+    {{username}}
+    <mat-icon
+      (click)="logout()"
+      matTooltip="Выход"
+      class="logout">exit_to_app
+    </mat-icon>
+  </div>
   <div class="svg_container">
     <svg viewBox="0 0 960 960" id="svg" (click)="svgClick($event)">
       <g id="4r" style="display: none">
@@ -62,9 +66,9 @@
         <g id="1dot"></g>
       </g>
       <g id="0r"></g>
-      <g id="-1r"  style="display: none">
+      <g id="-1r" style="display: none">
         <path id="path-1"
-                        d="M 480 480
+              d="M 480 480
               L 560 480
               L 480 560
               L 480 520
@@ -78,7 +82,7 @@
       </g>
       <g id="-2r" style="display: none">
         <path id="path-2"
-                        d="M 480 480
+              d="M 480 480
               L 640 480
               L 480 640
               L 480 560
@@ -90,7 +94,7 @@
               L 480 480" stroke="black" fill="#fc812f"/>
         <g id="-2dot"></g>
       </g>
-      <g id="-3r"  style="display: none">
+      <g id="-3r" style="display: none">
         <path id="path-3"
               d="M 480 480
               L 720 480
@@ -104,9 +108,9 @@
               L 480 480" stroke="black" fill="#fc813f"/>
         <g id="-3dot"></g>
       </g>
-      <g id="-4r"  style="display: none">
+      <g id="-4r" style="display: none">
         <path id="path-4"
-                        d="M 480 480
+              d="M 480 480
               L 800 480
               L 480 800
               L 480 640
