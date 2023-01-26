@@ -39,7 +39,7 @@ export class SvgComponent {
 
     let xPartOfSvg = (event.clientX - svgCoord.x) / svgCoord.width // координата(в долях) клика относительно размеров svg
     let yPartOfSvg = (event.clientY - svgCoord.y) / svgCoord.height
-    this.drawPoint(document.getElementById(this.point.r.toString() + 'r'), (xPartOfSvg) * 960, (yPartOfSvg) * 960)
+    this.drawPoint(document.getElementById(this.point.r.toString() + 'dot'), (xPartOfSvg) * 960, (yPartOfSvg) * 960)
 
     //координаты в системе координат графика(должны быть отправлены на сервер), а не в системе координат пикселей
     // this.point.x = (xPartOfSvg - 0.5) * 12
@@ -59,7 +59,10 @@ export class SvgComponent {
     this.point.r = radius
     for (let i = -4; i < 5; i++) {
       // @ts-ignore
+      document.getElementById(this.point.r.toString() + 'dot').innerHTML = '';
+      // @ts-ignore
       document.getElementById(i.toString() + 'r').style.display = "none";
+
     }
     let r = radius;
     this.point.r = r;
@@ -86,7 +89,7 @@ export class SvgComponent {
         let x = Number(this.items[i].x);
         let y = Number(this.items[i].y);
         if (x <= 960 && y <= 960) {
-          this.drawPoint(document.getElementById(this.items[i].r.toString()+"r"), (x/12 + 0.5) * 960, (y/(-12) + 0.5) * 960, this.items[i].res ? 'green' : 'red')
+          this.drawPoint(document.getElementById(this.items[i].r.toString()+"dot"), (x/12 + 0.5) * 960, (y/(-12) + 0.5) * 960, this.items[i].res ? 'green' : 'red')
         }
       }
     }
@@ -104,7 +107,10 @@ export class SvgComponent {
         //todo remove all points
         this.table.getPoints();
         this.items = [];
-        this.allPointsRender()
+        for (let i = -4; i < 5; i++) {
+          // @ts-ignore
+          document.getElementById(this.point.r.toString() + 'dot').innerHTML = '';
+        }
       }
     )
   }
