@@ -101,10 +101,12 @@ export class SvgComponent {
     }
     this.httpService.deleteData("/backend/api/points", undefined, true).subscribe(
       () => {
+        //todo remove all points
         this.table.getPoints();
+        this.items = [];
+        this.allPointsRender()
       }
     )
-    this.allPointsRender()
   }
 
   logout() {
