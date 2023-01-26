@@ -1,6 +1,6 @@
 {
   "/backend": {
-    "target": "http://127.0.0.1:8080/backend/",
+    "target": "http://127.0.0.1:14100/backend/",
     "secure": false,
     "pathRewrite": {
       "^/backend": ""
